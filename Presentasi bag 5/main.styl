@@ -1,0 +1,338 @@
+@import 'nib' // CSS3 extensions for Stylus: http://visionmedia.github.io/nib/
+
+// variables!
+
+slide_width = 100%
+slide_height = 100%
+slide_background = url(../image/background.jpg)
+
+slide_transition_length = .6s
+slide_transition_easing = linear
+slide_transition_rotate_y =  90 deg
+// Safari bugs out on 3d transform-origins, so we have to fake it
+slide_transition_nudge_x = -100 px
+
+bullet_transition_length = .3s
+bullet_transition_easing = ease
+bullet_transition_translate_x = 16px
+
+// base
+
+*
+  box-sizing: border-box
+  margin: 0
+  padding: 0
+
+@media print
+  *
+    -webkit-print-color-adjust: exact
+
+@page
+  size: landscape
+  margin: 0
+
+// bespoke.js layout styles
+
+article
+  transition: background slide_transition_length slide_transition_easing
+  display: none
+  &.bespoke-parent
+    display: block
+    position: absolute
+    top: 0
+    bottom: 0
+    left: 0
+    right: 0
+    overflow: hidden
+    @media print
+      overflow: visible
+      position: static
+    perspective: 1366px
+
+.bespoke-slide
+  transition:
+    transform slide_transition_length slide_transition_easing,
+    opacity slide_transition_length slide_transition_easing,
+    background slide_transition_length slide_transition_easing
+  transform-origin: 0% 100% 0
+  backface-visibility: hidden
+  display: flex
+  flex-direction: column
+  justify-content: center
+  align-items: center
+  text-align: center
+  width: slide_width
+  height: slide_height
+  position: absolute
+  background: slide_background
+  padding: 40px
+  border-radius: 0
+  @media print
+    zoom: 1 !important // disable bespoke-scale
+    height: 743px // seems to correspond with an A4, landscape page height
+    width: 100%
+    page-break-before: always
+    position: static
+    margin: 0
+
+.bespoke-before
+  transform: translate3d(50px, 0px, -100px);
+.bespoke-after
+  transform: translate3d(50px, 0, -100px);
+
+  @media print
+    transform: none
+
+.bespoke-inactive
+  opacity: 0
+  pointer-events: none
+  @media print
+    opacity 1
+
+.bespoke-active
+  opacity: 1
+
+// bespoke-bullet styles
+
+.bespoke-bullet
+  transition: all bullet_transition_length bullet_transition_easing
+
+.bespoke-bullet-inactive
+  opacity: 0
+  li&
+    transform: translateX(bullet_transition_translate_x)
+  @media print
+    opacity: 1
+
+.bespoke-bullet-active
+  opacity: 1
+
+// bespoke-scale styles
+
+.bespoke-scale-parent
+  perspective: 600px
+  position: absolute
+  top: 0
+  left: 0
+  right: 0
+  bottom: 0
+  @media print
+    transform: none !important
+
+// bespoke-progress styles
+
+.bespoke-progress-parent
+  position: absolute
+  top: 0
+  left: 0
+  right: 0
+  height: 2px
+  @media only screen and (min-width: 1366px)
+    height: 4px
+  @media print
+    display: none
+
+.bespoke-progress-bar
+  transition: width .6s ease
+  position: absolute
+  height: 100%
+  background: cyan
+  border-radius: 0 4px 4px 0
+
+// bespoke-state styles
+
+.emphatic,
+.emphatic .bespoke-slide
+  background: slide_background
+
+// prism styles
+
+pre
+  padding: 26px !important
+  border-radius: 8px
+
+// content styles
+
+body
+  font-family: helvetica, arial, sans-serif
+  font-size: 18px
+  color: #404040
+
+h1
+  font-size: 72px
+  line-height: 82px
+  letter-spacing: -2px
+  margin-bottom: 16px
+
+h2
+  font-size: 42px
+  letter-spacing: -1px
+  margin-bottom: 8px
+
+h3
+  font-size: 24px
+  font-weight: normal
+  margin-bottom: 24px
+  color: #606060
+
+hr
+  visibility: hidden
+  height: 20px
+
+ul
+  list-style: none
+
+li
+  margin-bottom: 12px
+
+p
+  margin: 0 100px 12px
+  line-height: 22px
+
+a
+  color: #0089f3
+  text-decoration: none
+
+b
+  float : left
+
+b img
+  position : absolute
+  top : 0 px
+  left : 100 px
+  width : 400 px
+  height : 500 px
+
+b box
+  right :75px
+  top : 50 px
+  position :absolute
+  width : 650 px
+  height : 500 px
+  background-color:#ee1b2e
+
+b box p
+  font-size:15 pt
+  margin-left: 50px
+  margin-right: 50px
+  text-align : justify
+  color : white
+  font-family: Myriad Pro
+  font-weight: 300
+
+b box hr
+  visibility: visible
+  height : 3px
+  width: 300 px
+  margin-left : 50px
+  background-color: white
+
+b box h2
+  margin-top: 30px
+  margin-left: 50px
+  text-align : left
+  color: white
+  font-family: Myriad Pro
+footer img
+  position : absolute
+  bottom : 10 px
+  right :0 px
+
+footer p
+  position:absolute
+  left:25px
+  bottom : 25px
+  color : white
+  font-family:Myriad Pro
+  font-size : 25pt
+  font-weight:bold
+
+footer te
+  position: absolute
+  left: 190px
+  bottom : 40 px
+  font-family: Myriad Pro
+  font-size : 16 pt
+  color :gray
+
+history img
+  position : absolute
+  top :0
+  left: 100px
+
+history box
+  width : 900 px
+  right :75px
+  top : 50 px
+  position :absolute
+  height : 500 px
+  background-color:#ee1b2e
+
+history box p
+  font-size:15 pt
+  line-height : 16 pt
+  margin-left: 50px
+  margin-right: 50px
+  text-align : justify
+  color : white
+  font-family: Myriad Pro
+  font-weight: 300
+
+history box hr
+  visibility: visible
+  height : 3px
+  width: 500 px
+  margin-left : 50px
+  background-color: white
+
+history box h2
+  margin-top: 30px
+  margin-left: 50px
+  text-align : left
+  color: white
+  font-family: Myriad Pro
+
+center img
+  width : 1000px
+
+ai img
+  position : absolute
+  top :0
+  left: 100px
+
+ai box  
+  position : absolute
+  top : 30px
+  right :0  
+
+  width: 1000px
+  height : 550 px
+  background-repeat:no-repeat
+  background-image:url(/image/6.png)
+
+ai box h2
+  margin-top:30px
+  margin-left:50px
+  color:white
+  text-align:left
+
+ai box p
+  margin-top:10px
+  margin-left:50px
+  margin-right:550px
+  text-align:justify
+  color:white
+  
+
+ai box hr
+  visibility: visible
+  height : 3px
+  width: 400 px
+  margin-top: 20px
+  margin-left : 50px
+  background-color: white
+
+ps img
+  position : absolute
+  top :0
+  left: 100px
